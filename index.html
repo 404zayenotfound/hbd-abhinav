@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Caveat:wght@500;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="config.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<button id="mute" class="mute" aria-label="Toggle sound">🔊</button>
+
+<!-- ============ GATE ============ -->
+<section id="gate" class="screen">
+  <div class="sticker tilt-l">⚠ SECURITY CHECKPOINT ⚠</div>
+  <h1 class="gate-q">Is this <span data-name></span>?</h1>
+  <div class="gate-btns">
+    <button id="yesBtn" class="btn btn-yes">YES, IT IS I</button>
+    <button id="noBtn" class="btn btn-no">no</button>
+  </div>
+  <p id="gateMsg" class="gate-msg">(this site is for one person only)</p>
+</section>
+
+<!-- ============ PRESENT ============ -->
+<section id="present" class="screen hidden">
+  <p class="present-hint" id="presentHint">a present has been detected. click it.</p>
+  <button id="gift" class="gift" aria-label="Open your present">
+    <span class="gift-rays"></span>
+    <span class="gift-box"></span>
+    <span class="gift-lid"><span class="bow"></span></span>
+  </button>
+</section>
+
+<!-- ============ MAIN ============ -->
+<main id="main" class="hidden">
+  <header class="hero">
+    <div class="marquee"><div class="marquee-track" id="marquee"></div></div>
+    <div class="hero-decor" id="decor"></div>
+    <h1 class="title" id="title"></h1>
+    <p class="age">you are now <button id="age" class="age-num"></button> years old</p>
+    <p class="age-note" id="ageNote">(click to verify)</p>
+    <p class="subtitle" id="subtitle"></p>
+    <p class="scroll-hint">scroll ↓ there's more. so much more.</p>
+  </header>
+
+  <section class="sky-sec" id="skySec">
+    <div class="clouds" aria-hidden="true">
+      <span class="cloud" style="--x:8%;--y:14%;--s:1.2;--d:0s"></span>
+      <span class="cloud" style="--x:72%;--y:10%;--s:.9;--d:.15s"></span>
+      <span class="cloud" style="--x:82%;--y:62%;--s:1.4;--d:.3s"></span>
+      <span class="cloud" style="--x:4%;--y:70%;--s:.8;--d:.45s"></span>
+      <span class="cloud" style="--x:40%;--y:84%;--s:1;--d:.6s"></span>
+    </div>
+    <p class="sky-label">an important question:</p>
+    <p class="sky-q" id="skyQ">WHATS UP??</p>
+    <button class="btn btn-big sky-btn" id="skyBtn">idk. what's up?</button>
+    <h2 class="sky-a hidden" id="skyA" aria-label="THE SKYYYY.">
+      <span class="sky-the">THE</span>
+      <span class="sky-word">SK<span id="skyY"></span></span>
+    </h2>
+    <p class="sky-hint hidden" id="skyHint">(click it. it gets bigger. the sky has no limit.)</p>
+  </section>
+
+  <section class="block" id="letterSec">
+    <h2 class="sec-title">01 · a letter</h2>
+    <div class="env-stage">
+      <div class="envelope" id="envelope">
+        <div class="env-front-wrap"><div class="env-front"></div></div>
+        <div class="env-flap-wrap"><div class="env-flap"></div></div>
+        <button class="seal" id="seal" aria-label="Open the letter">♥</button>
+      </div>
+      <article class="letter hidden" id="letter">
+        <button class="skip" id="skip">skip ▸▸</button>
+        <h3 id="lGreet"></h3>
+        <div id="lBody"></div>
+        <p class="signoff" id="lSign"></p>
+      </article>
+    </div>
+    <p class="hint" id="envHint">click the seal. gently. it's vintage.</p>
+  </section>
+
+  <section class="block">
+    <h2 class="sec-title tilt-r">02 · the evidence</h2>
+    <p class="hint">all photos have been entered into the official record. drag them around. click to zoom.</p>
+    <div class="board" id="board"></div>
+  </section>
+
+  <section class="block awards-sec">
+    <h2 class="sec-title">03 · the awards ceremony</h2>
+    <p class="hint">the committee has deliberated. click to read the citation.</p>
+    <div class="awards" id="awards"></div>
+    <button class="duck" id="duck" aria-label="a duck">🦆</button>
+  </section>
+
+  <section class="block tape-sec">
+    <h2 class="sec-title tilt-r">04 · the mixtape</h2>
+    <p class="hint">a carefully curated playlist. no notes. (several notes.) press play.</p>
+    <div class="cassette" id="cassette">
+      <div class="cas-label"><span id="tapeTitle"></span><small id="nowPlaying">side A · press play</small></div>
+      <div class="cas-window">
+        <span class="reel"></span><span class="cas-tape"></span><span class="reel"></span>
+      </div>
+      <div class="cas-bottom"><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="player">
+      <button class="pbtn" id="pPrev" aria-label="Previous track">⏮</button>
+      <button class="pbtn pmain" id="pPlay" aria-label="Play">▶</button>
+      <button class="pbtn" id="pNext" aria-label="Next track">⏭</button>
+      <div class="pbar" id="pBar"><div class="pfill" id="pFill"></div></div>
+      <span class="ptime" id="pTime">0:00</span>
+    </div>
+    <ol class="tracklist" id="tracks"></ol>
+    <div class="yt-host"><div id="ytPlayer"></div></div>
+  </section>
+
+  <section class="block cake-sec">
+    <h2 class="sec-title">05 · cake (mandatory)</h2>
+    <p class="hint" id="cakeHint"></p>
+    <div class="cake">
+      <div class="candles" id="candles"></div>
+      <div class="tier tier-top"></div>
+      <div class="tier tier-bot"></div>
+      <div class="plate"></div>
+    </div>
+    <div class="cake-btns">
+      <button class="btn btn-small" id="micBtn">🎤 blow for real</button>
+      <button class="btn btn-small hidden" id="relight">🔥 relight</button>
+    </div>
+  </section>
+
+  <section class="block dnp-sec">
+    <h2 class="sec-title tilt-r">06 · ???</h2>
+    <div class="hazard">
+      <button class="dnp" id="dnp" aria-label="Do not press"></button>
+    </div>
+    <p class="dnp-label" id="dnpLabel">DO NOT PRESS</p>
+  </section>
+
+  <section class="block finale-sec">
+    <button class="btn btn-big" id="finaleBtn">one more thing.<small>(it's serious. brace yourself.)</small></button>
+  </section>
+
+  <footer class="foot">
+    <p>made with love, spite, and very little sleep by <span data-from></span>.</p>
+    <p class="tiny">no birthdays were harmed in the making of this website. there are <span id="eggTotal"></span> secrets on this page.</p>
+  </footer>
+</main>
+
+<!-- ============ OVERLAYS ============ -->
+<button id="eggBadge" class="egg-badge hidden">🥚 <span id="eggCount">0</span>/<span id="eggMax">0</span></button>
+<div id="eggPanel" class="egg-panel hidden">
+  <h4>secrets found</h4>
+  <ul id="eggList"></ul>
+</div>
+
+<div id="lightbox" class="overlay hidden">
+  <button class="lb-btn lb-close" aria-label="Close">✕</button>
+  <button class="lb-btn lb-prev" aria-label="Previous">‹</button>
+  <figure class="lb-fig"><div class="lb-media"></div><figcaption class="lb-cap"></figcaption></figure>
+  <button class="lb-btn lb-next" aria-label="Next">›</button>
+</div>
+
+<div id="wish" class="overlay hidden">
+  <form class="wish-card" id="wishForm">
+    <h3>MAKE A WISH</h3>
+    <p id="wishText">type it below. we will absolutely not read it.</p>
+    <input id="wishInput" maxlength="140" placeholder="i wish…" autocomplete="off">
+    <button class="btn" type="submit">send wish ✨</button>
+  </form>
+</div>
+
+<div id="bsod" class="bsod hidden">
+  <div class="bsod-inner">
+    <div class="bsod-face">:(</div>
+    <p>Your birthday ran into a problem and needs to restart. We're just collecting some cake, and then we'll restart for you.</p>
+    <p class="bsod-pct"><span id="bsodPct">0</span>% complete</p>
+    <p class="bsod-small">If you call a support person, give them this info:<br>Stop code: TOO_MUCH_SWAG_EXCEPTION</p>
+  </div>
+</div>
+
+<div id="finale" class="finale hidden">
+  <div class="finale-lines" id="finaleLines"></div>
+  <button class="btn hidden" id="finaleDone">ok. i'm done being nice.</button>
+</div>
+
+<div id="ctx" class="ctx hidden"></div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
+</body>
+</html>
